@@ -14,4 +14,9 @@ class StringCalculatorTest {
         calculator = new StringCalculator();
     }
 
+    @Test
+    public void testEmptyStringReturnsZero() {
+        assertEquals(0, calculator.add(""));
+    }
+
 }
