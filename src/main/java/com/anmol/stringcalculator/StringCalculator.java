@@ -42,7 +42,11 @@ public class StringCalculator {
         int sum = 0;
 
         for (String token : tokens) {
-            sum += Integer.parseInt(token.trim());
+            int number = Integer.parseInt(token.trim());
+            if (number < 0) {
+                throw new IllegalArgumentException("Negatives not allowed: " + number);
+            }
+            sum += number;
         }
 
         return sum;
