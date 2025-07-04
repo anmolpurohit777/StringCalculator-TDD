@@ -1,8 +1,7 @@
 package com.anmol.stringcalculator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
+import java.util.*;
+import java.util.regex.*;
 import java.util.stream.Collectors;
 
 public class StringCalculator {
@@ -17,7 +16,7 @@ public class StringCalculator {
         String delimiterRegex = "[,\n]";
 
         if (hasCustomDelimiter(input)) {
-            delimiterRegex = "[,\n]|" + extractCustomDelimiterRegex(input);
+            delimiterRegex = "[,\n]|" + extractSingleCustomDelimiterAnySize(input);
             input = removeDelimiterPrefix(input);
         }
 
@@ -37,9 +36,13 @@ public class StringCalculator {
         return input.startsWith("//");
     }
 
-    private String extractCustomDelimiterRegex(String input) {
+    private String extractSingleCustomDelimiterAnySize(String input) {
         int newlineIndex = input.indexOf("\n");
-        String delimiter = input.substring(2, newlineIndex);
+        String delimiterSection = input.substring(2, newlineIndex);
+        if (!delimiterSection.startsWith("[")) {
+            return Pattern.quote(delimiterSection);
+        }
+        String delimiter = delimiterSection.substring(1, delimiterSection.length() - 1);
         return Pattern.quote(delimiter);
     }
 
