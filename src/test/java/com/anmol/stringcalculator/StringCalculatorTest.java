@@ -52,4 +52,12 @@ class StringCalculatorTest {
         assertEquals(10, calculator.add("//.\n1.2,3\n4"));
     }
 
+    @Test
+    public void testSingleNegativeThrowsException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                calculator.add("1,-3,2"));
+
+        assertEquals("Negatives not allowed: -3", exception.getMessage());
+    }
+
 }
