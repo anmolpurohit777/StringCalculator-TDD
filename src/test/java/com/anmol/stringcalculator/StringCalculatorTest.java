@@ -20,13 +20,15 @@ class StringCalculatorTest {
     }
 
     @Test
-    public void testSingleNumber() {
+    public void testSingleNumberReturnsValue() {
         assertEquals(5, calculator.add("5"));
+        assertEquals(100, calculator.add("100"));
     }
 
     @Test
-    public void testTwoNumbersCommaSeparated() {
-        assertEquals(8, calculator.add("3,5"));
+    public void testTwoCommaSeparatedNumbersReturnSum() {
+        assertEquals(3, calculator.add("1,2"));
+        assertEquals(100, calculator.add("40,60"));
     }
 
 }
