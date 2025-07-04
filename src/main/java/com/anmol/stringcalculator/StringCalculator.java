@@ -1,6 +1,9 @@
 package com.anmol.stringcalculator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class StringCalculator {
 
@@ -15,7 +18,8 @@ public class StringCalculator {
             input = removeDelimiterPrefix(input);
         }
 
-        return sumDelimited(input, delimiterRegex);
+        List<Integer> parsedNumbers = parseAndValidate(input, delimiterRegex);
+        return calculateSum(parsedNumbers);
     }
 
     private boolean isEmpty(String input) {
@@ -36,19 +40,34 @@ public class StringCalculator {
         return input.substring(input.indexOf("\n") + 1);
     }
 
-    private int sumDelimited(String input, String delimiterRegex) {
-
+    private List<Integer> parseAndValidate(String input, String delimiterRegex) {
         String[] tokens = input.split(delimiterRegex);
-        int sum = 0;
+        List<Integer> numbers = new ArrayList<>();
+        List<Integer> negatives = new ArrayList<>();
 
         for (String token : tokens) {
-            int number = Integer.parseInt(token.trim());
-            if (number < 0) {
-                throw new IllegalArgumentException("Negatives not allowed: " + number);
+            if (!token.trim().isEmpty()) {
+                int num = Integer.parseInt(token.trim());
+                if (num < 0) negatives.add(num);
+                numbers.add(num);
             }
-            sum += number;
         }
 
+        if (!negatives.isEmpty()) {
+            throw new IllegalArgumentException("Negatives not allowed: " +
+                    negatives.stream()
+                            .map(String::valueOf)
+                            .collect(Collectors.joining(", ")));
+        }
+
+        return numbers;
+    }
+
+    private int calculateSum(List<Integer> numbers) {
+        int sum = 0;
+        for (int num : numbers) {
+            sum += num;
+        }
         return sum;
     }
 
