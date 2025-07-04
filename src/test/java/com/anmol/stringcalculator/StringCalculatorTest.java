@@ -38,4 +38,11 @@ class StringCalculatorTest {
         assertEquals(0, calculator.add("0,0,0"));
     }
 
+    @Test
+    public void testCommaAndNewlineAsDelimiters() {
+        assertEquals(6, calculator.add("1\n2,3"));
+        assertEquals(10, calculator.add("2,3\n5"));
+        assertEquals(15, calculator.add("1\n2,3\n4,5"));
+    }
+
 }
