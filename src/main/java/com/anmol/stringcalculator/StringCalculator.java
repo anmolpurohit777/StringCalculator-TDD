@@ -7,26 +7,33 @@ public class StringCalculator {
     public int add(String input) {
 
         if (isEmpty(input)) return 0;
-        if (isSingleNumber(input)) return parseSingleNumber(input);
-        if (containsCommaOrNewline(input)) return sumDelimited(input, "[,\n]");
 
-        return -1;
+        String delimiterRegex = "[,\n]";
+
+        if (hasCustomDelimiter(input)) {
+            delimiterRegex = "[,\n]|" + extractCustomDelimiterRegex(input);
+            input = removeDelimiterPrefix(input);
+        }
+
+        return sumDelimited(input, delimiterRegex);
     }
 
     private boolean isEmpty(String input) {
         return input == null || input.trim().isEmpty();
     }
 
-    private boolean isSingleNumber(String input) {
-        return !input.contains(",") && !input.contains("\n");
+    private boolean hasCustomDelimiter(String input) {
+        return input.startsWith("//");
     }
 
-    private boolean containsCommaOrNewline(String input) {
-        return input.contains(",") || input.contains("\n");
+    private String extractCustomDelimiterRegex(String input) {
+        int newlineIndex = input.indexOf("\n");
+        String delimiter = input.substring(2, newlineIndex);
+        return Pattern.quote(delimiter);
     }
 
-    private int parseSingleNumber(String input) {
-        return Integer.parseInt(input.trim());
+    private String removeDelimiterPrefix(String input) {
+        return input.substring(input.indexOf("\n") + 1);
     }
 
     private int sumDelimited(String input, String delimiterRegex) {
