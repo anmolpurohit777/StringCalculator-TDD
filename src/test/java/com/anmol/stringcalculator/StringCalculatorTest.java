@@ -24,4 +24,9 @@ class StringCalculatorTest {
         assertEquals(5, calculator.add("5"));
     }
 
+    @Test
+    public void testTwoNumbersCommaSeparated() {
+        assertEquals(8, calculator.add("3,5"));
+    }
+
 }
