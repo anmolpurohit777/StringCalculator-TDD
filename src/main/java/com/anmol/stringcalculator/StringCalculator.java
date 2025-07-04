@@ -7,7 +7,10 @@ import java.util.stream.Collectors;
 
 public class StringCalculator {
 
+    private int callCount = 0;
+
     public int add(String input) {
+        callCount++;
 
         if (isEmpty(input)) return 0;
 
@@ -23,7 +26,7 @@ public class StringCalculator {
     }
 
     public int GetCalledCount() {
-        return -1;
+        return callCount;
     }
 
     private boolean isEmpty(String input) {
