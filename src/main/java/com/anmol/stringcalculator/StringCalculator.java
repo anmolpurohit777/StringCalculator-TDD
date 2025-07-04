@@ -22,6 +22,10 @@ public class StringCalculator {
         return calculateSum(parsedNumbers);
     }
 
+    public int GetCalledCount() {
+        return -1;
+    }
+
     private boolean isEmpty(String input) {
         return input == null || input.trim().isEmpty();
     }

@@ -67,4 +67,13 @@ class StringCalculatorTest {
 
         assertEquals("Negatives not allowed: -5, -7", exception.getMessage());
     }
+
+    @Test
+    public void testGetCalledCount() {
+        calculator.add("1,2");
+        calculator.add("3,4,5");
+
+        assertEquals(2, calculator.GetCalledCount());
+    }
+
 }
