@@ -31,4 +31,11 @@ class StringCalculatorTest {
         assertEquals(100, calculator.add("40,60"));
     }
 
+    @Test
+    public void testMultipleCommaSeparatedNumbersReturnSum() {
+        assertEquals(6, calculator.add("1,2,3"));
+        assertEquals(15, calculator.add("1,2,3,4,5"));
+        assertEquals(0, calculator.add("0,0,0"));
+    }
+
 }
