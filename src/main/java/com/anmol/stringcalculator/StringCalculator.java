@@ -1,12 +1,14 @@
 package com.anmol.stringcalculator;
 
+import java.util.regex.Pattern;
+
 public class StringCalculator {
 
     public int add(String input) {
 
         if (isEmpty(input)) return 0;
         if (isSingleNumber(input)) return parseSingleNumber(input);
-        if (isCommaSeparated(input)) return sumCommaSeparated(input);
+        if (isCommaOnly(input)) return sumDelimited(input, ",");
 
         return -1;
     }
@@ -19,7 +21,7 @@ public class StringCalculator {
         return !input.contains(",") && !input.contains("\n");
     }
 
-    private boolean isCommaSeparated(String input) {
+    private boolean isCommaOnly(String input) {
         return input.contains(",") && !input.contains("\n");
     }
 
@@ -27,12 +29,15 @@ public class StringCalculator {
         return Integer.parseInt(input.trim());
     }
 
-    private int sumCommaSeparated(String input) {
-        String[] tokens = input.split(",");
+    private int sumDelimited(String input, String delimiter) {
+
+        String[] tokens = input.split(Pattern.quote(delimiter));
         int sum = 0;
+
         for (String token : tokens) {
             sum += Integer.parseInt(token.trim());
         }
+
         return sum;
     }
 
