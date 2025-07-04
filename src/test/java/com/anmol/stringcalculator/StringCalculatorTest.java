@@ -76,4 +76,12 @@ class StringCalculatorTest {
         assertEquals(2, calculator.GetCalledCount());
     }
 
+    @Test
+    public void testNumbersGreaterThan1000AreIgnored() {
+        assertEquals(2, calculator.add("2,1001"));
+        assertEquals(1002, calculator.add("2,1000"));
+        assertEquals(6, calculator.add("//;\n1;1002;2;3;1200"));
+        assertEquals(1006, calculator.add("//;\n1;1000,2\n3;1010"));
+    }
+
 }
