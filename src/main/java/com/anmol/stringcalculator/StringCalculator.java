@@ -55,7 +55,6 @@ public class StringCalculator {
         }
 
         return delimiters.stream()
-                .filter(d -> d.length() == 1)
                 .map(Pattern::quote)
                 .collect(Collectors.joining("|"));
     }
