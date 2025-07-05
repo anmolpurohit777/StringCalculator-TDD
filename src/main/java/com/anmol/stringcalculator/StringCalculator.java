@@ -16,7 +16,7 @@ public class StringCalculator {
         String delimiterRegex = "[,\n]";
 
         if (hasCustomDelimiter(input)) {
-            delimiterRegex = "[,\n]|" + extractSingleCustomDelimiterAnySize(input);
+            delimiterRegex = "[,\n]|" + extractDelimiters(input);
             input = removeDelimiterPrefix(input);
         }
 
@@ -36,15 +36,30 @@ public class StringCalculator {
         return input.startsWith("//");
     }
 
-    private String extractSingleCustomDelimiterAnySize(String input) {
+    private String extractDelimiters(String input) {
         int newlineIndex = input.indexOf("\n");
         String delimiterSection = input.substring(2, newlineIndex);
+
         if (!delimiterSection.startsWith("[")) {
-            return Pattern.quote(delimiterSection);
+                return Pattern.quote(delimiterSection);
         }
-        String delimiter = delimiterSection.substring(1, delimiterSection.length() - 1);
-        return Pattern.quote(delimiter);
+
+        Matcher matcher = Pattern.compile("\\[(.*?)]").matcher(delimiterSection);
+        List<String> delimiters = new ArrayList<>();
+        while (matcher.find()) {
+            delimiters.add(matcher.group(1));
+        }
+
+        if (delimiters.size() == 1) {
+            return Pattern.quote(delimiters.get(0));
+        }
+
+        return delimiters.stream()
+                .filter(d -> d.length() == 1)
+                .map(Pattern::quote)
+                .collect(Collectors.joining("|"));
     }
+
 
     private String removeDelimiterPrefix(String input) {
         return input.substring(input.indexOf("\n") + 1);
