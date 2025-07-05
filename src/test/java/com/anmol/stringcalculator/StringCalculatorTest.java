@@ -91,4 +91,11 @@ class StringCalculatorTest {
         assertEquals(20, calculator.add("//[___]\n5___5,5\n5"));
     }
 
+    @Test
+    public void testMultipleCustomDelimitersSingleLength() {
+        assertEquals(calculator.add("//[*][%]\n1*2%3"), 6);
+        assertEquals(calculator.add("//[;][!][*]\n4;5!6*1001"), 15);
+        assertEquals(calculator.add("//[#][@]\n5,6\n7#8@9"), 35);
+    }
+
 }
