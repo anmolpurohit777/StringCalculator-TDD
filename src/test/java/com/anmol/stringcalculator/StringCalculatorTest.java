@@ -93,9 +93,16 @@ class StringCalculatorTest {
 
     @Test
     public void testMultipleCustomDelimitersSingleLength() {
-        assertEquals(calculator.add("//[*][%]\n1*2%3"), 6);
-        assertEquals(calculator.add("//[;][!][*]\n4;5!6*1001"), 15);
-        assertEquals(calculator.add("//[#][@]\n5,6\n7#8@9"), 35);
+        assertEquals(6,calculator.add("//[*][%]\n1*2%3"));
+        assertEquals(15,calculator.add("//[;][!][*]\n4;5!6*1001"));
+        assertEquals(35,calculator.add("//[#][@]\n5,6\n7#8@9"));
+    }
+
+    @Test
+    public void testMultipleCustomDelimitersOfAnyLength() {
+        assertEquals(10, calculator.add("//[***][%%]\n1***2%%3***4"));
+        assertEquals(25, calculator.add("//[abc][def]\n5abc5def5,5\n5"));
+        assertEquals(21, calculator.add("//[--][!!][@@]\n6--5!!4@@6\n1010"));
     }
 
 }
